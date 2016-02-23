@@ -63,7 +63,6 @@ class crud__db{
 // link class @share__link()
 //            $_lnk->generate__link()
       $_lnk = new share__link();
-
 			  echo "<article>";
 
 // valiadte if post is an image
@@ -74,7 +73,6 @@ class crud__db{
 //post a text
           echo "<h2>".$_row['txt']."</h2>";
         }
-  		  echo "<p>".$_row['link']."".$_lnk->generate__link()."</p>";
         echo "<aside>";
         $date1 = $_row['datum'];
         $date2 = time();
@@ -90,15 +88,17 @@ class crud__db{
               echo "Vor " . round($datum/60, 0) . " Std.";
             break;
           case $datum <= 7200:
-              echo "Vor " . round($datum/1440, 0) . " Tag/en.";
+              echo "Vor " . round($datum/1440, 0) . " Tag/e";
             break;
           default:
             echo gmdate("H:i - d.m.Y", $_row['datum']);
             break;
         }
         echo "</aside>";
+        // echo "<p>".$_row['link']."".$_lnk->generate__link()."</p>";
         echo "<i class=\"ion-android-favorite-outline\"></i>";
-        echo "<i class=\"ion-android-share\"></i>";
+        echo "<i class=\"ion-android-lock\"></i>";
+        echo "<i class=\"ion-android-more-horizontal\"></i>";
         echo "<span class=\"clearfix\"></span>";
 			echo "</article>";
 

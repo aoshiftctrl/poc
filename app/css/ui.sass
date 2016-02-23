@@ -1,25 +1,34 @@
-/* __ MEDIA QUERY */
+/*
+ * Viewport Responsive Breakpoints*/
 
 $MQ-iPhone: 568px
 $MQ-iPadP: 768px
 $MQ-iPadL: 1024px
 
-/* __ PADDING */
+
+/*
+ * Global UI Margins */
 
 $UIPadding: 20px
 $UIMargin: 44px
 
-/* __ COLOR */
 
-$UIColor: #673AB7
+/*
+ * Global Colours rgb() */
+
+$UIColor: #6200EA
+$UIColorLight: #7C4DFF
 $UIColorAkzent: #69F0AE
 $UIColorCard: #fff
-$UIColorGray: #E0E0E0
+$UIColorGray: #d0d0d0
 
 $UIBackground: #EEEEEE
+
 $UITextColor: rgb(60,60,60)
 
-/* __ FONT */
+
+/*
+ * Fonts Sets for content */
 
 =UIFont($FontSize)
 	font:
@@ -29,9 +38,12 @@ $UITextColor: rgb(60,60,60)
 		size: $FontSize
 
 
+// external Reset sass
 @import reset
 
-/* __ DEFAULT WEB */
+
+/*
+ * General styles helper */
 strong
 	font-weight: bold
 em
@@ -45,6 +57,12 @@ body
 	background:
 		color: $UIBackground
 
+
+/* app haeder
+ * @header
+ * @avatar
+ * @ menu
+ */
 header
 	display: flex
 	align-items: center
@@ -62,8 +80,7 @@ header
 		bottom: $UIMargin/2
 header
 	div.avatar
-		margin:
-			right: $UIMargin
+		width: 25%
 	div.avatar
 		img
 			width: 33px
@@ -71,16 +88,32 @@ header
 	div.app
 		+UIFont(16pt)
 		color: $UIColor
-		width: 65%
+		width: 50%
 		text-align: center
+		padding:
+			left: $UIMargin/2
+	div.menu
+		width: 25%
+		text-align: right
+		margin:
+			right: $UIMargin/4
+	div.menu
+		i
+			color: $UIColor
+			font:
+				size: 18pt
 
+
+/* General app section grid
+ * @ menu
+ */
 section
 	width: 100%
 	margin: 0 auto
 section
 	article
 		background: $UIColorCard
-		padding: $UIMargin/4 $UIMargin/2
+		padding: $UIMargin/2 $UIMargin/2
 		border:
 			top: solid 1px $UIBackground
 		+UIFont(14pt)
@@ -99,20 +132,30 @@ section
 				size: 18pt
 			color: $UIColor
 
+
+/* post app section  grid
+ * @path
+ * @icons @ion
+ */
+
 section#path
 	article *
-		margin: $UIMargin/4 0
 		color: $UITextColor
 	article
 		h2
-			color: $UIColor
+			color: $UITextColor
 			line-height: 1.4em
+			margin:
+				bottom: $UIMargin/2
 		p
 			font:
 				size: 10pt
 		aside
 			font:
 				size: 9pt
+			color: $UIColorLight
+			margin:
+				bottom: $UIMargin/2
 		i
 			line-height: 0.1em
 			font:
@@ -120,15 +163,26 @@ section#path
 			float: left
 			margin:
 				right: $UIMargin/4
-			color: $UIColor
+			color: $UIColorGray
 			border: solid 1px $UIBackground
-			padding: $UIMargin/10 $UIMargin/6
+			padding: $UIMargin/12 $UIMargin/6
+			margin-right: $UIMargin/4
 			border:
 				radius: 4px
 		img
 			width: 98%
 			height: auto
 			display: block
+			margin:
+				bottom: $UIMargin/2
+
+		i.active
+			color: $UIColorLight
+
+
+/* lazy laoding section grid
+ * @loading
+ */
 
 section.loading
 	background-color: #ddd

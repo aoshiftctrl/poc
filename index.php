@@ -17,7 +17,6 @@ $app = array(
 // templates laden
 $header = $m->loadTemplate('header');
 $apptitle = $m->loadTemplate('appname');
-$journl = $m->loadTemplate('journl');
 
 require("controllers/sqlite__db.php");
 require("controllers/share__link.php");
@@ -50,7 +49,7 @@ require("controllers/share__link.php");
 
 	<section>
 	  <form name="journl" method="post" action="<?= $_SERVER["REQUEST_URI"]; ?>">
-	    <input type="text" name="journl" value="" placeholder="say something" id="journlpost" />
+	    <input type="text" name="journl" value="" placeholder="say something nice" id="journlpost" />
 	  </form>
 	</section>
 
