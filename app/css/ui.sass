@@ -1,0 +1,138 @@
+/* __ MEDIA QUERY */
+
+$MQ-iPhone: 568px
+$MQ-iPadP: 768px
+$MQ-iPadL: 1024px
+
+/* __ PADDING */
+
+$UIPadding: 20px
+$UIMargin: 44px
+
+/* __ COLOR */
+
+$UIColor: #673AB7
+$UIColorAkzent: #69F0AE
+$UIColorCard: #fff
+$UIColorGray: #E0E0E0
+
+$UIBackground: #EEEEEE
+$UITextColor: rgb(60,60,60)
+
+/* __ FONT */
+
+=UIFont($FontSize)
+	font:
+		family: 'Roboto', sans-serif
+		weight: 400
+		style: normal
+		size: $FontSize
+
+
+@import reset
+
+/* __ DEFAULT WEB */
+strong
+	font-weight: bold
+em
+	font-style: italic
+
+html, body
+	width: 100%
+	height: 100%
+
+body
+	background:
+		color: $UIBackground
+
+header
+	display: flex
+	align-items: center
+	padding: $UIMargin/4
+	background:
+		color: $UIColorAkzent
+	border:
+		bottom: solid 1px #EEEEEE
+	width: 90%
+	border:
+		radius: 8px
+	margin: 0 auto
+	margin:
+		top: $UIMargin
+		bottom: $UIMargin/2
+header
+	div.avatar
+		margin:
+			right: $UIMargin
+	div.avatar
+		img
+			width: 33px
+			height: auto
+	div.app
+		+UIFont(16pt)
+		color: $UIColor
+		width: 65%
+		text-align: center
+
+section
+	width: 100%
+	margin: 0 auto
+section
+	article
+		background: $UIColorCard
+		padding: $UIMargin/4 $UIMargin/2
+		border:
+			top: solid 1px $UIBackground
+		+UIFont(14pt)
+	form
+		input
+			width: 100%
+			padding: $UIMargin/2
+			font:
+				size: 12pt
+			border: none
+			background: $UIColorCard
+			outline: none
+		input:focus
+			padding: $UIMargin $UIMargin/2
+			font:
+				size: 18pt
+			color: $UIColor
+
+section#path
+	article *
+		margin: $UIMargin/4 0
+		color: $UITextColor
+	article
+		h2
+			color: $UIColor
+			line-height: 1.4em
+		p
+			font:
+				size: 10pt
+		aside
+			font:
+				size: 9pt
+		i
+			line-height: 0.1em
+			font:
+				size: 14pt
+			float: left
+			margin:
+				right: $UIMargin/4
+			color: $UIColor
+			border: solid 1px $UIBackground
+			padding: $UIMargin/10 $UIMargin/6
+			border:
+				radius: 4px
+
+section.loading
+	background-color: #ddd
+	opacity: 0.4
+	padding: 20px
+	display: none
+	margin-bottom: 40px
+
+section.loading
+	div
+		opacity: 1
