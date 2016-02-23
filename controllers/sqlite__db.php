@@ -60,12 +60,20 @@ class crud__db{
 
 		while($_row = $_result->fetch()){
 
-      // link class @share__link()
-      //            $_lnk->generate__link()
+// link class @share__link()
+//            $_lnk->generate__link()
       $_lnk = new share__link();
 
 			  echo "<article>";
-  		  echo "<h2>".$_row['txt']."</h2>";
+
+// valiadte if post is an image
+// post as an img
+        if (preg_match("/.jpg/",$_row["txt"]) || preg_match("/.gif/",$_row["txt"])){
+          echo "<img src=\"".$_row['txt']."\" alt=\"\">";
+        } else {
+//post a text
+          echo "<h2>".$_row['txt']."</h2>";
+        }
   		  echo "<p>".$_row['link']."".$_lnk->generate__link()."</p>";
         echo "<aside>";
         $date1 = $_row['datum'];
