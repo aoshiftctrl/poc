@@ -56,8 +56,8 @@ require("controllers/share__link.php");
 	<section id="path">
 	<?php
 
-	  $_article = new crud__db();
-	  $_article->fetch__db();
+	  $_article = new CrudDb();
+	  $_article->FetchDb();
 
 	?>
 	</section>

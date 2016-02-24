@@ -1,25 +1,51 @@
 <?php
-/*
-____ sqlite3.x
-*/
 
-class crud__db{
+/**
+ * Filename: sqlide__db.php
+ * The class file for CRUD the sqlite db
+ * PHP Version 5.x
+ *
+ * @category Controllers
+ * @package  CrudDb
+ * @author   Rej <rej@cctrl.de>
+ * @license  CC Attribution 3.0 Unported http://creativecommons.org/licenses/by/3.0/legalcode
+ * @link     foo
+ */
+
+/**
+ * CrudDb
+ * Does everything with the db
+ *
+ * @category Controllers
+ * @package  CrudDb
+ * @author   Rej <rej@cctrl.de>
+ * @license  CC Attribution 3.0 Unported http://creativecommons.org/licenses/by/3.0/legalcode
+ * @link     foo
+ */
+class CrudDb
+{
+
+    public $Db;
+    public $Heute;
+    public $Url = "http://www.domain.tld/";
 
 
-  public $db;
-  public $heute;
+    /**
+     * _construct
+     *
+     * Generates the db file
+     *
+     * @return none
+     */
+    function __construct()
+    {
 
+        if (file_exists("db/journl.sqlite3") === false) {
+            $this->Db = new PDO('sqlite:db/journl.sqlite3');
+            // Set errormode to exceptions.
+            $this->Db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-	function __construct(){
-
-   if (!file_exists("db/journl.sqlite3")){
-
-			$this->db = new PDO('sqlite:db/journl.sqlite3');
-      // Set errormode to exceptions
-      $this->db->setAttribute(PDO::ATTR_ERRMODE,
-                              PDO::ERRMODE_EXCEPTION);
-
-      $_sql = 'CREATE TABLE journl (
+            $_sql = 'CREATE TABLE journl (
                 id INTEGER PRIMARY KEY,
                 datum DATE,
                 txt TEXT,
@@ -27,98 +53,101 @@ class crud__db{
                 link TEXT
                 )';
 
-      $this->db->exec($_sql);
-
-    } else {
-
-      $this->db = new PDO('sqlite:db/journl.sqlite3');
-
-    }
-
-  }
-
-	function insert__db(){
-
-
-		$this->db = new PDO('sqlite:db/journl.sqlite3');
-
-    $this->heute = time();
-  	$_sql = 'INSERT INTO journl(datum, txt, status, link)'.
-          	'VALUES ("'.$this->heute.'", "'.$_POST["journl"].'", "0", "http://www.mlly.me/");'
-          	;
-
-		$this->db->exec($_sql);
-
-	}
-
-	function fetch__db(){
-
-		$this->db = new PDO('sqlite:db/journl.sqlite3');
-
-		$_sql = 'SELECT * FROM journl ORDER BY id DESC LIMIT 5';
-		$_result = $this->db->query($_sql);
-
-		while($_row = $_result->fetch()){
-
-// link class @share__link()
-//            $_lnk->generate__link()
-      $_lnk = new share__link();
-			  echo "<article>";
-
-// valiadte if post is an image
-// post as an img
-        if (preg_match("/.jpg/",$_row["txt"]) || preg_match("/.gif/",$_row["txt"])){
-          echo "<img src=\"".$_row['txt']."\" alt=\"\">";
+            $this->Db->exec($_sql);
         } else {
-//post a text
-          echo "<h2>".$_row['txt']."</h2>";
-        }
-        echo "<aside>";
-        $date1 = $_row['datum'];
-        $date2 = time();
-        $diff = $date2 - $date1;
+            $this->Db = new PDO('sqlite:db/journl.sqlite3');
+        }//end if
 
-        $datum = round($diff/60, 0);
-
-        switch ($datum) {
-          case $datum <= 59:
-              echo "Vor " . $datum . " Min.";
-            break;
-          case $datum <= 1439:
-              echo "Vor " . round($datum/60, 0) . " Std.";
-            break;
-          case $datum <= 7200:
-              echo "Vor " . round($datum/1440, 0) . " Tag/e";
-            break;
-          default:
-            echo gmdate("H:i - d.m.Y", $_row['datum']);
-            break;
-        }
-        echo "</aside>";
-        // echo "<p>".$_row['link']."".$_lnk->generate__link()."</p>";
-        echo "<i class=\"ion-android-favorite-outline\"></i>";
-        echo "<i class=\"ion-android-lock\"></i>";
-        echo "<i class=\"ion-android-more-horizontal\"></i>";
-        echo "<span class=\"clearfix\"></span>";
-			echo "</article>";
-
-		}
-
-	}
+    }//end __construct()
 
 
+    /**
+     * InsertDb
+     *
+     * Writes post in the db
+     *
+     * @return none
+     */
+    function InsertDb()
+    {
+
+        $this->Db = new PDO('sqlite:db/journl.sqlite3');
+
+        $this->Heute = time();
+        $_sql        = 'INSERT INTO journl(datum, txt, status, link) VALUES ("'.$this->Heute.'", "'.$_POST["journl"].'", "0", "'.$this->Url.'");';
+
+        $this->Db->exec($_sql);
+
+    }//end InsertDb()
 
 
+    /**
+     * FetchDb
+     *
+     * Read the db
+     *
+     * @return none
+     */
+    function FetchDb()
+    {
+
+        $this->Db = new PDO('sqlite:db/journl.sqlite3');
+
+        $SqliteQuery  = 'SELECT * FROM journl ORDER BY id DESC';
+        $SqliteResult = $this->Db->query($SqliteQuery);
+
+        while ($Entry = $SqliteResult->fetch()) {
+            $_lnk = new ShareLink();
+
+            echo "<article>";
+
+            if (preg_match("/.jpg/", $Entry["txt"]) or preg_match("/.gif/", $Entry["txt"])) {
+                echo "<img src=\"".$Entry['txt']."\" alt=\"\">";
+            } else {
+                echo "<h2>".$Entry['txt']."</h2>";
+            }
+
+              echo "<aside>";
+              $DateSqliteResult = $Entry['datum'];
+              $DateCurrent      = time();
+              $diff = ($DateCurrent - $DateSqliteResult);
+
+              $EntryDate = round(($diff / 60), 0);
+
+            switch ($EntryDate) {
+            case $EntryDate <= 59:
+                echo "Vor ".$EntryDate." Min.";
+                break;
+            case $EntryDate <= 1439:
+                echo "Vor ".round(($EntryDate / 60), 0)." Std.";
+                break;
+            case $EntryDate <= 7200:
+                echo "Vor ".round(($EntryDate / 1440), 0)." Tag/e";
+                break;
+            default:
+                echo gmdate("H:i - d.m.Y", $Entry['datum']);
+                break;
+            }
+
+            echo "<p class=\"publiclink\">".$Entry["link"].$_lnk->_construct()."</p>";
+            echo "</aside>";
+            echo "<i class=\"ion-android-favorite-outline\"></i>";
+            echo "<i class=\"ion-android-unlock active\"></i>";
+            echo "<i class=\"ion-android-more-horizontal\"></i>";
+            echo "<span class=\"clearfix\"></span>";
+            echo "</article>";
+        }//end while
+
+    }//end FetchDb()
+
+
+}//end class
+
+
+
+
+
+if (empty($_POST["journl"]) === false) {
+    $_insert = new CrudDb();
+    $_insert->InsertDb();
 }
-
-
-
-
- if (! empty($_POST["journl"])){
-   $_insert = new crud__db();
-   $_insert->insert__db();
-
- }
-
-
-?>
