@@ -11,5 +11,8 @@
 - gulp
 - and some Google Webfonts
 
+###
+Next steps
+- speed caching
 
 made with ❤ by shiftctrl
